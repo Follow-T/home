@@ -1,0 +1,471 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>FollowT</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="keywords" content="fly,layui,前端社区">
+  <meta name="description" content="Fly社区是模块化前端UI框架Layui的官网社区，致力于为web开发提供强劲动力">
+  <link rel="stylesheet" href="../res/layui/css/layui.css">
+  <link rel="stylesheet" href="../res/css/global.css">
+  <link rel="stylesheet" href="/res/css/common.css">
+  <link rel="stylesheet" href="/res/css/m.css">
+  <link rel="stylesheet" href="/res/css/kk.css">
+</head>
+<style>
+
+</style>
+<body>
+
+<div class="fly-header layui-bg-black" th:fragment="header">
+<div class="layui-container" >
+	<ul class="layui-nav  " >
+	  <li class="layui-nav-item" id="1">
+		<a  style="cursor:pointer">我的主页</a>
+	  </li>
+	  <li class="layui-nav-item" id="2">
+		<a  style="cursor:pointer">个人中心<span class="layui-badge-dot"></span></a>
+	  </li>
+	  <li class="layui-nav-item" id="3">
+		<a style="cursor:pointer" >文章发布</span></a>
+	  </li>
+	  <li class="layui-nav-item layui-hide-xs">
+		<a style="cursor:hand">比篮球更重要的就是你啦</a>
+	  </li>
+	  <!--  <li style="cursor:hand"class="layui-nav-item layui-hide-xs">
+		<a >不接受所有的不欢而散</a>
+	  </li>-->
+	  <span id="index" style="left: 0px;top: 55px;width: 96px;height: 5px;opacity: 1; display:block; background-color: #5FB878; position: absolute ;"></span>
+	  <span id="info" style="left: 96px;top: 55px;width: 96px;height: 5px;opacity: 1; display:none; background-color: #5FB878; position: absolute ;"></span>
+	  <span id="add" style="left: 192px;top: 55px;width: 96px;height: 5px;opacity: 1; display:none; background-color: #5FB878; position: absolute ;"></span>
+	  
+	</ul>
+	<ul class="layui-nav fly-nav layui-hide-xs">
+      
+    </ul>
+	<ul class="layui-nav layui-hide-xs" style="position: absolute;top: 0;right: 210px;">
+		
+		<li class="layui-nav-item" lay-unselect="">
+			<i class="layui-icon layui-icon-play" id="control" style="font-size: 20px; cursor:pointer;"></i>
+			
+	    </li>
+		
+	
+	    <li class="layui-nav-item" lay-unselect="">	
+			<audio id="audio" src=""  loop="loop" autoplay="autoplay" ></audio>	
+	    </li>
+		
+		
+	</ul>
+	<ul class="layui-nav layui-hide-xs"  style="position: absolute;top: 0;right: 100px;">
+		<li class="layui-nav-item" lay-unselect="">	
+			
+			<marquee scrollamount=4 align=# width="100px">徐秉龙/桃十五-青柠</marquee>
+			
+	    </li>	
+	</ul>
+	<ul class="layui-nav" style="position: absolute;top: 0;right: 0;" id="my">
+		<li class="layui-nav-item" lay-unselect="">
+		<a href="javascript:;"><img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/wx.jpg" class="layui-nav-img">我</a>
+		<dl class="layui-nav-child">
+		  <dd><a href="/photo">我的相册</a></dd>
+		  <dd><a href="/game">娱乐一下</a></dd>
+		</dl>
+		</li>	
+		<span id="bar" style="left: 0px;top: 55px;width: 96px;height: 5px;opacity: 1; display:none; background-color: #5FB878; position: absolute ;"></span>
+	</ul>
+</div>
+</div>
+
+
+<div class="layui-container" style="padding-top: 15px;display:none" id="edit" >
+
+    <div class="layui-card">
+        <div class="layui-card-header">文章简述</div>
+        <div class="layui-card-body">
+            <div class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <div class="layui-col-md3">
+                        <label class="layui-form-label">所在专栏</label>
+                        <div class="layui-input-block">
+                            <select id="type" lay-verify="required" name="type" z-index="9999" lay-filter="column">
+                                <option></option>
+                                <option value="0">Life</option>
+                                <option value="1">Study</option>
+                                <option value="2">Free</option>
+                                <option value="3">Happy</option>
+                               
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-col-md9">
+                        <label class="layui-form-label">Article Title</label>
+                        <div class="layui-input-block">
+                            <input type="text" id="title" name="title" required lay-verify="required" autocomplete="off" class="layui-input">
+                            <!-- <input type="hidden" name="id" value="{{d.edit.id}}"> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">Article Summary</div>
+        <div class="layui-card-body">
+            <div class="layui-form layui-form-pane">
+                <div class="layui-form-item">
+                    <div class="layui-col-md12">
+                        <textarea id="summary" placeholder="文章概要"  required lay-verify="required" name="summary"  autocomplete="off" class="layui-textarea" style="height: 80px;"></textarea>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="layui-card">
+        <div class="layui-card-header">Article Content</div>
+        <div class="layui-card-body">
+            <textarea id="richTV" style="display: none;">
+            </textarea>
+        </div>
+        <button id="submitShare" class="layui-btn" style="margin:10px; ">finish share</button>
+        <a href="/index"class="layui-btn layui-btn-warm" style="margin:10px; ">toindex</a>
+    </div>
+
+</div>
+
+<div class="layui-container" style="padding-top: 15px;display:none" id="myinfo" >
+<div style="padding: 20px; background-color: #4caf6e94;">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">致我亲爱的篮球</div>
+        <div class="layui-card-body" >
+          <img width="100%" height="320px" src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2273707361,3038031709&fm=26&gp=0.jpg" >
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md6">
+      <div class="layui-card">
+        <div class="layui-card-header">致我亲爱的你们</div>
+        <div class="layui-card-body" >
+          <img width="100%" height="320px" src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/us.jpg">
+        </div>
+      </div>
+    </div>
+    <div class="layui-col-md12">
+      <div class="layui-card">
+        <div class="layui-card-header">lalalalalalalala</div>
+        <div class="layui-card-body">
+          我要奔爱啦啊啊啊啊
+        </div>
+      </div>
+    </div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+		<legend style="color:#333333cf;">Something Meaningful In my Life</legend>
+	</fieldset>
+	<ul class="layui-timeline" >
+	  <li class="layui-timeline-item" style="overflow:auto;">
+		<i class="layui-icon layui-timeline-axis"></i>
+		<div class="layui-timeline-content layui-text" style="color:#ff222282">
+		  <h3 class="layui-timeline-title">张家界之游</h3>
+		  <div class="layui-col-md3" style="padding-right:15px; padding-bottom:10px;">
+		  	<img width="100%" height="350px" src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/%E5%BC%A0%E5%AE%B6%E7%95%8C.jpg">
+		  </div>
+		  <div class="layui-col-md3" style="padding-right:15px;">
+		  	<img width="100%" height="350px" src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/%E5%BC%A0%E5%AE%B6%E7%95%8C.jpg">
+		  </div>
+		  
+		 <br ><br > <br >最帅的那个就是我啦！
+		 <!-- <p>
+			中国人民抗日战争胜利日
+			<br>常常在想，尽管对这个国家有这样那样的抱怨，但我们的确生在了最好的时代
+			<br>铭记、感恩
+			<br>所有为中华民族浴血奋战的英雄将士
+			<br>永垂不朽
+		  </p> -->
+		</div>
+	  </li>
+	  <li class="layui-timeline-item">
+		<i class="layui-icon layui-timeline-axis"></i>
+		<div class="layui-timeline-content layui-text">
+		  <div class="layui-timeline-title">过去</div>
+		</div>
+	  </li>
+	</ul>  
+  </div>
+</div> 
+</div> 
+
+<div class="layui-container" style="margin-top:7.5px; display:block" id="content">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-md9 "> 
+    	<div  class="layui-col-md12">
+    		<div class="layui-col-md8 ">
+        	<div  class="layui-carousel " style="float:left" id="test10" >
+				<div carousel-item="" >
+				<div ><img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/1.jpg" style="width:100%;height:100%"></div>
+				<div ><img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/2.jpg" style="width:100%;height:100%"></div>
+				<div ><img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/3.jpg" style="width:100%;height:100%"></div>
+				<div ><img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/4.jpg" style="width:100%;height:100%"></div>
+				</div>			
+			</div>
+			</div>
+	 		<div class="headline  layui-col-md3">
+      			<ul>
+        		<li><a  title="比篮球更重要的就是你啦"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558277808036&di=94f3a11714029b89d5c56bf545e29fe6&imgtype=0&src=http%3A%2F%2Fgss0.baidu.com%2F94o3dSag_xI4khGko9WTAnF6hhy%2Fzhidao%2Fpic%2Fitem%2F4610b912c8fcc3ce339d25749345d688d43f201c.jpg" alt="比篮球更重要的就是你啦"><span>比篮球更重要的就是你啦</span></a></li>
+        		<li><a  title="老詹牛逼"><img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558277930568&di=2c08a83356f55ed4a7b6307eab2ce36e&imgtype=0&src=http%3A%2F%2Fww2.sinaimg.cn%2Fcrop.0.8.1200.674.1000.562%2F9f56c002gw1f531xc00i1j20xc0xcgrq.jpg" alt="不接受所有的不欢而散"><span></span></a></li>
+     			</ul>
+    		</div> 
+    	</div> 
+    	<div class="fly-panel" id="article" >
+    		<div class="fly-panel-title fly-filter" >
+          		<a>My Article</a>
+        	</div>
+        	<ul class="fly-list">
+          	<li th:each="article : ${articles}">
+            	<a href="user/home.html" th:href="'/article/'+${article.id}" class="fly-avatar">
+              		<img src="../res/wx.jpg"  alt="tg">
+           		</a>
+            	<h2>
+              	<a class="layui-badge">Life With You</a>
+              	<a href="jie/detail.html" th:href="'/article/'+${article.id}" th:title="${article.title}" th:text="${article.title}"></a>
+            	</h2>
+            	<div class="fly-list-info">
+              		<a href="user/home.html" link>
+                		<cite>宇宙最帅涛</cite>
+              		</a>
+              		<span th:text="${article.createTime}"></span>
+              
+              		<span class="fly-list-kiss layui-hide-xs" title="悬赏飞吻"><i class="iconfont icon-kiss"></i> 60</span>
+              		<span class="fly-list-nums"> 
+               		 <i class="layui-icon layui-icon-praise" title="点赞/喜欢"></i> [[${article.likes}]]
+              		</span>
+            	</div>
+          </li>  
+          </ul>
+    	</div>
+    	
+     </div>
+    <div class="layui-col-md3">
+
+      <div class="fly-panel">
+        <h3 class="fly-panel-title">个人名片</h3>
+        <ul class="fly-panel-main fly-list-static">
+          <li>
+            <a  target="_blank">网名:我的春天来啦i</a>
+          </li>
+          <li>
+            <a  target="_blank">
+              职位:学生
+            </a>
+          </li>
+          <li>
+            <a  target="_blank">学校:湖南科技大学</a>
+          </li>
+          <li>
+            <a  target="_blank">
+              爱好:篮球与你
+            </a>
+          </li>
+          <li>
+            <a  target="_blank">email:945614282@qq.com</a>
+          </li>
+        </ul>
+      </div>
+	   <div class="fly-panel" th:fragment="senlear_echo">
+        <div class="fly-panel-title">
+          三毛与荷西
+        </div>
+        <div class="fly-panel-main" style="background-color: #5FB878;">
+          <a     style="background-color: #5FB878;color: #fff">
+          	荷西问三毛:你以后想嫁一个什么样的人?
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	三毛说:看不顺眼的,千万富翁也不嫁，看得顺眼的呐,亿万富翁也嫁.
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	荷西又说:说到底还是要嫁一个有钱人咯.
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	三毛笑着回答说:那可不一定哦.
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	荷西说:那要是我呢?
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	三毛笑着说:如果是你的话,有饭吃就好了.
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	荷西说道:你吃的多吗?
+          </a><br><br>
+          <a     style="background-color: #5FB878; color: #fff">
+          	荷西回答说:傻子,我吃的不多,以后还可以更少点.
+          </a><br>
+        </div>
+      </div>
+
+      <div class="fly-panel" style="padding: 20px 0; text-align: center;">
+        <img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/weixin.png" style="max-width: 100%;" alt="tg">
+        <p style="position: relative; color: #666;">微信扫码获取更多</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="fly-footer">
+  <p><a href="http://followt.xin/" target="_blank">Senlear社区</a> 2019 &copy; <a href="http://followt.xin/" target="_blank">learn more</a></p>
+  <p>
+    <a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/weixin.png" target="_blank">一元也是爱</a>
+    <a href="https://github.com/Follow-T/Senlear-" target="_blank">获取Senlear社区Github地址</a>
+    <a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/mmqrcode1556891308185.png" target="_blank">微信号</a>
+  </p>
+</div>
+ 
+<script src="../res/layui/layui.js"></script>
+<script src="../res/Jquery.js"></script>
+<script src="../res/js/index.js"></script>
+<script>
+layui.cache.page = '';
+layui.cache.user = {
+  username: '游客'
+  ,uid: -1
+  ,avatar: '../res/images/avatar/00.jpg'
+  ,experience: 83
+  ,sex: '男'
+};
+layui.config({
+  version: "3.0.0"
+  ,base: '../res/mods/' //这里实际使用时，建议改成绝对路径
+}).extend({
+  fly: 'index'
+}).use('fly');
+</script>
+<script>
+layui.use('element', function(){
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+  
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+  });
+});
+</script>
+<script>
+layui.use(['carousel', 'form'], function(){
+  var carousel = layui.carousel
+  ,form = layui.form;
+  
+  //图片轮播
+  carousel.render({
+    elem: '#test10'
+    ,width: '100%'
+    ,height: '260px'
+    ,interval: 5000
+  });
+  
+  
+  
+  var $ = layui.$, active = {
+    set: function(othis){
+      var THIS = 'layui-bg-normal'
+      ,key = othis.data('key')
+      ,options = {};
+      
+      othis.css('background-color', '#5FB878').siblings().removeAttr('style'); 
+      options[key] = othis.data('value');
+      ins3.reload(options);
+    }
+  };
+  
+  //监听开关
+  form.on('switch(autoplay)', function(){
+    ins3.reload({
+      autoplay: this.checked
+    });
+  });
+  
+  $('.demoSet').on('keyup', function(){
+    var value = this.value
+    ,options = {};
+    if(!/^\d+$/.test(value)) return;
+    
+    options[this.name] = value;
+    ins3.reload(options);
+  });
+  
+  //其它示例
+  $('.demoTest .layui-btn').on('click', function(){
+    var othis = $(this), type = othis.data('type');
+    active[type] ? active[type].call(this, othis) : '';
+  });
+});
+</script>
+<script>
+    layui.use(['jquery', 'layer', 'element', 'form', 'layedit'], function () {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var element = layui.element;
+        var form = layui.form;
+        var layedit = layui.layedit;
+
+        // 渲染编辑器
+        var edtIndex = layedit.build('richTV', {
+            height: 200,
+            tool: ['strong', 'italic', 'underline', 'del', '|', 'left', 'center', 'right', 'link', 'unlink', 'face']
+        });
+
+        $("#submitShare").click(function() {
+           
+            var content = layedit.getContent(edtIndex);
+            var title = $("#title").val();
+            var type = $("#type").val();
+            var summary = $("#summary").val();
+
+            sumbit(title,content,type,summary);
+        });
+        // 重写帮助事件
+        $('.layedit-tool-help').removeAttr('layedit-event');
+        $('.layedit-tool-help').on('click', function (e) {
+            window.open('https://gitee.com/whvse/easy-fs');
+        });
+        // 重写图片事件
+        $('.layedit-tool-image').removeAttr('layedit-event');
+        $('.layedit-tool-image input').remove();
+        function sumbit(title,content,type,summary){
+            var formData = new FormData();
+            formData.append('content',content);
+            formData.append('title',title);
+            formData.append('type',type);
+            formData.append('summary',summary);
+            $.ajax({
+                url: '/addarticle',
+                type: 'POST',
+                data: formData,
+                //这两个设置项必填
+                contentType: false,
+                processData: false,
+                dataType: 'jsonp',
+                calback: "callback",
+                cache: false,
+                success: function (data) {
+                    if (data['status'] == '200') {
+                        layer.msg(data['data'], { icon: 1, time: 1000 });
+                        //window.location.href="/article/"+id;
+                    } else {
+                        layer.msg('提交失败!', { icon: 2, time: 1000 });
+                        //console.log(data);
+                    }
+
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    layer.msg('网络错误!',{icon:2,time:1000});
+                }
+            });
+        }
+
+    });
+</script>
+</body>
+</html>

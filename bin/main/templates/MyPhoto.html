@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>帅涛的美照</title>
+	<link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../res/css/viewbox.css">
+</head>
+<body>
+	<div class="container">
+		 
+		<div class="container">
+			<header class="page-header">
+				<h1><span class="glyphicon glyphicon-picture"></span> FollowT's Life Photo</h1>
+			</header>
+			<main>
+				<div class="row">
+					<div class="col-xs-6 col-md-3">
+						<a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i1.jpg" class="thumbnail" title="San Francisco">
+							<img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i1-thumb.jpg" alt="">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i2.jpg" class="thumbnail" title="Rotterdam">
+							<img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i2-thumb.jpg" alt="">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i3.jpg" class="thumbnail" title="New York">
+							<img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i3-thumb.jpg" alt="">
+						</a>
+					</div>
+					<div class="col-xs-6 col-md-3">
+						<a href="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i4.jpg" class="thumbnail" title="Istanbul">
+							<img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i4-thumb.jpg" alt="">
+						</a>
+					</div>
+				</div>
+				<p><a href=".https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i5.jpg" class="thumbnail-2">
+					<img src="https://get-blog.oss-cn-shanghai.aliyuncs.com/wentaohome/i5-thumb.jpg" alt="" class="img-responsive">
+				</a></p>
+				<p>&nbsp;</p>
+			</main>
+		</div>
+	 
+	</div>
+ 
+<script src="../res/js/jquery-1.11.0.min.js"></script>
+	<script src="../res/js/jquery.viewbox.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			
+			$('.thumbnail').viewbox();
+			$('.thumbnail-2').viewbox();
+
+			(function(){
+				var vb = $('.popup-link').viewbox();
+				$('.popup-open-button').click(function(){
+					vb.trigger('viewbox.open');
+				});
+				$('.close-button').click(function(){
+					vb.trigger('viewbox.close');
+				});
+			})();
+			
+		});
+	</script>
+</body>
+</html>
